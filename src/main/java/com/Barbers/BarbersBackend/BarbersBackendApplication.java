@@ -9,6 +9,7 @@ public class BarbersBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BarbersBackendApplication.class, args);
+		//
 	}
 
 }
