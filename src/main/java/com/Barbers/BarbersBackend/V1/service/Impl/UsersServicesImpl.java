@@ -7,6 +7,7 @@ import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,10 +20,19 @@ public class UsersServicesImpl implements UsersService {
 
     private final UsersRepository usersRepository;
 
+    private final PasswordEncoder encoder;
+
     @Override
     public Users create(UsersRequest usersRequest) {
+        Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
+
+        if(optUsers.isPresent())
+            throw new BadRequestException("Email já existe.");
+
         Users users = new Users();
         BeanUtils.copyProperties(usersRequest,users);
+
+        users.setPassword(encoder.encode(users.getPassword()));
         return usersRepository.save(users);
     }
 
@@ -34,6 +44,9 @@ public class UsersServicesImpl implements UsersService {
     @Override
     public Users deleteUsers(UUID id) {
         Optional<Users> users = usersRepository.findById(id);
+
+        if(!users.isPresent())
+            throw new BadRequestException("Usuário informado não existe.");
 
         usersRepository.deleteById(id);
         return null;
