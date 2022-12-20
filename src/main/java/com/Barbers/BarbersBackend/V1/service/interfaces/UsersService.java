@@ -1,15 +1,22 @@
 package com.Barbers.BarbersBackend.V1.service.interfaces;
 
+import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
+import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
 import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.model.Users;
+import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UsersService {
-    Users create(UsersRequest usersRequest);
+    UsersResponse create(UsersRequest usersRequest);
 
-    List<Users> getAllUsers();
+    List<UsersResponse> getAllUsers(Pageable pageable);
 
-    Users deleteUsers(UUID id);
+    void deleteUsers(UUID id);
+
+    UsersResponse putUsers(UsersPutRequest usersPutRequest);
+
+    UsersResponse patchUsers(UsersPatchRequest usersPatchRequest);
 }

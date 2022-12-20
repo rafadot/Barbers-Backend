@@ -1,9 +1,12 @@
 package com.Barbers.BarbersBackend.V1.controller;
 
+import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
+import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
 import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.model.Users;
+import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +23,23 @@ public class UsersController {
     private final UsersService usersService;
 
     @PostMapping
-    public ResponseEntity<Users> createUser(UsersRequest usersRequest){
+    public ResponseEntity<UsersResponse> createUser(UsersRequest usersRequest){
         return new ResponseEntity<>(usersService.create(usersRequest), HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Users>> getAllUsers(){
-        return new ResponseEntity<>(usersService.getAllUsers() , HttpStatus.OK);
+    public ResponseEntity<List<UsersResponse>> getAllUsers(Pageable pageable){
+        return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<UsersResponse> putUser(UsersPutRequest usersPutRequest){
+        return new ResponseEntity<>(usersService.putUsers(usersPutRequest) , HttpStatus.CREATED);
+    }
+
+    @PatchMapping
+    public ResponseEntity<UsersResponse> patchUser(UsersPatchRequest usersPatchRequest){
+        return new ResponseEntity<>(usersService.patchUsers(usersPatchRequest) , HttpStatus.CREATED);
     }
 
     @DeleteMapping
@@ -34,5 +47,4 @@ public class UsersController {
         usersService.deleteUsers(uuid);
     }
 
-    //
 }
