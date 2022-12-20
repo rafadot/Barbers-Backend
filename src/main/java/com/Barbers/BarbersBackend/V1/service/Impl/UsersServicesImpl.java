@@ -21,8 +21,6 @@ public class UsersServicesImpl implements UsersService {
 
     @Override
     public Users create(UsersRequest usersRequest) {
-        Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
-
         Users users = new Users();
         BeanUtils.copyProperties(usersRequest,users);
         return usersRepository.save(users);
@@ -36,9 +34,6 @@ public class UsersServicesImpl implements UsersService {
     @Override
     public Users deleteUsers(UUID id) {
         Optional<Users> users = usersRepository.findById(id);
-
-        if(users.isEmpty())
-            throw new BadRequestException("O usuário informado não existe");
 
         usersRepository.deleteById(id);
         return null;
