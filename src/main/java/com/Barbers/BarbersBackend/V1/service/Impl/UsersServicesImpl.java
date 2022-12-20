@@ -10,9 +10,7 @@ import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.exceptions.BadRequestException;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -85,6 +83,7 @@ public class UsersServicesImpl implements UsersService {
             Users users = new Users();
 
             BeanUtils.copyProperties(usersPutRequest , users);
+            users.setPassword(encoder.encode(users.getPassword()));
             usersRepository.save(users);
 
             return UsersResponse.builder()
@@ -103,15 +102,16 @@ public class UsersServicesImpl implements UsersService {
         if(!optionalUsers.isPresent()){
             throw new BadRequestException("Id não corresponde a nenhum usuário");
         }else{
-            Users users = new Users();
-            UsersResponse usersResponse = UsersResponse.builder()
+            Users users = Users.builder()
                     .id(usersPatchRequest.getId())
                     .userName(usersPatchRequest.getUserName() == null ? optionalUsers.get().getUserName() : usersPatchRequest.getUserName())
                     .fullName(usersPatchRequest.getFullName() == null ? optionalUsers.get().getFullName() : usersPatchRequest.getFullName())
                     .email(usersPatchRequest.getEmail() == null ? optionalUsers.get().getEmail() : usersPatchRequest.getEmail())
+                    .password(usersPatchRequest.getPassword() == null ? optionalUsers.get().getPassword() : encoder.encode(usersPatchRequest.getPassword()))
                     .build();
 
-            BeanUtils.copyProperties(usersResponse , users);
+            UsersResponse usersResponse = new UsersResponse();
+            BeanUtils.copyProperties(users , usersResponse);
             usersRepository.save(users);
 
             return usersResponse;
