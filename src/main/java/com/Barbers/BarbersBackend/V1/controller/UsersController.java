@@ -33,4 +33,6 @@ public class UsersController {
     public void deleteUser(@RequestParam UUID uuid){
         usersService.deleteUsers(uuid);
     }
+
+    //
 }
