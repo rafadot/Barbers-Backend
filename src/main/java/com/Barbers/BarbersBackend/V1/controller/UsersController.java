@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*" , maxAge = 3600)
+@CrossOrigin(origins = "/**" , maxAge = 3600)
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsersController {
@@ -23,7 +23,7 @@ public class UsersController {
     private final UsersService usersService;
 
     @PostMapping
-    public ResponseEntity<UsersResponse> createUser(UsersRequest usersRequest){
+    public ResponseEntity<UsersResponse> createUser(@RequestBody UsersRequest usersRequest){
         return new ResponseEntity<>(usersService.create(usersRequest), HttpStatus.CREATED);
     }
 
@@ -33,12 +33,12 @@ public class UsersController {
     }
 
     @PutMapping
-    public ResponseEntity<UsersResponse> putUser(UsersPutRequest usersPutRequest){
+    public ResponseEntity<UsersResponse> putUser(@RequestBody UsersPutRequest usersPutRequest){
         return new ResponseEntity<>(usersService.putUsers(usersPutRequest) , HttpStatus.CREATED);
     }
 
     @PatchMapping
-    public ResponseEntity<UsersResponse> patchUser(UsersPatchRequest usersPatchRequest){
+    public ResponseEntity<UsersResponse> patchUser(@RequestBody UsersPatchRequest usersPatchRequest){
         return new ResponseEntity<>(usersService.patchUsers(usersPatchRequest) , HttpStatus.CREATED);
     }
 

@@ -1,4 +1,4 @@
-package com.Barbers.BarbersBackend.modelMapper;
+package com.Barbers.BarbersBackend.configs;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;

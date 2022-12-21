@@ -8,17 +8,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
 public class BarbersBackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BarbersBackendApplication.class, args);
-	}
-
-	@Bean
-	public PasswordEncoder getPassWordEncoder(){
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		return encoder;
 	}
 
 }
