@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsersController {
@@ -23,7 +22,7 @@ public class UsersController {
     private final UsersService usersService;
 
     @PostMapping("/register")
-    public ResponseEntity<UsersResponse> createUser(@RequestHeader UsersRequest usersRequest){
+    public ResponseEntity<UsersResponse> createUser(@RequestHeader("Access-Control-Allow-Origin") UsersRequest usersRequest){
         return new ResponseEntity<>(usersService.create(usersRequest), HttpStatus.CREATED);
     }
 
