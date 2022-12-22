@@ -11,7 +11,7 @@ import java.io.IOException;
 
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class CorsFilter implements Filter {
+public class CorsConfig implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
@@ -30,7 +30,7 @@ public class CorsFilter implements Filter {
 
         } else {
             chain.doFilter(req, res);
-        };
+        }
     }
 
     @Override

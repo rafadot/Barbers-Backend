@@ -23,7 +23,7 @@ public class UsersController {
 
     private final UsersService usersService;
 
-    @PostMapping("/register")
+    @PostMapping
     public ResponseEntity<UsersResponse> createUser(@RequestBody UsersRequest usersRequest){
         return new ResponseEntity<>(usersService.create(usersRequest), HttpStatus.CREATED);
     }
