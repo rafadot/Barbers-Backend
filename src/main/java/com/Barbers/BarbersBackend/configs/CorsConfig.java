@@ -11,7 +11,7 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("https://barbers.herokuapp.com/**")
+        registry.addMapping("https://barbers.herokuapp.com/v3/api-docs/**")
                 .allowedOrigins("https://barbers-frontend.netlify.app/**")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
                 .allowedHeaders("*");
