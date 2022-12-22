@@ -14,6 +14,8 @@ public class CorsConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("https://barbers-frontend.netlify.app")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH")
-                .allowedHeaders("*");
+                .allowedHeaders("*")
+                .exposedHeaders("*")
+                .allowCredentials(true).maxAge(3600);
     }
 }
