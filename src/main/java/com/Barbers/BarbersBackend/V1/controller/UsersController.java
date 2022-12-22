@@ -15,13 +15,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsersController {
 
     private final UsersService usersService;
 
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @PostMapping("/register")
     public ResponseEntity<UsersResponse> createUser(@RequestBody UsersRequest usersRequest){
         return new ResponseEntity<>(usersService.create(usersRequest), HttpStatus.CREATED);
