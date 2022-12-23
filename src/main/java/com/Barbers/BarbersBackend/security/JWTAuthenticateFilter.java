@@ -25,9 +25,9 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
 
     AuthenticationManager authenticationManager;
 
-    public static final int TOKEN_EXPIRACAO = 10000;
+    public static final int TOKEN_EXPIRATION = 1800000;
 
-    public static final String TOKEN_SENHA = "37b7de97-b0e2-4053-bcfe-ec5328969c60";
+    public static final String TOKEN_PASSWORD = "37b7de97-b0e2-4053-bcfe-ec5328969c60";
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request,
@@ -55,8 +55,8 @@ public class JWTAuthenticateFilter extends UsernamePasswordAuthenticationFilter 
 
         String token = JWT.create()
                 .withSubject(usersDetailData.getUsername())
-                .withExpiresAt(new Date(System.currentTimeMillis()+ TOKEN_EXPIRACAO))
-                .sign(Algorithm.HMAC512(TOKEN_SENHA));
+                .withExpiresAt(new Date(System.currentTimeMillis()+ TOKEN_EXPIRATION))
+                .sign(Algorithm.HMAC512(TOKEN_PASSWORD));
 
         response.getWriter().write(token);
         response.getWriter().flush();
