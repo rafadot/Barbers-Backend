@@ -1,13 +1,12 @@
 package com.Barbers.BarbersBackend.V1.service.interfaces;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 public interface UsersService {

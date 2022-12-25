@@ -1,18 +1,22 @@
 package com.Barbers.BarbersBackend.V1.controller;
 
-import com.Barbers.BarbersBackend.V1.dto.*;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.Barbers.BarbersBackend.security.JWTAuthenticateFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController

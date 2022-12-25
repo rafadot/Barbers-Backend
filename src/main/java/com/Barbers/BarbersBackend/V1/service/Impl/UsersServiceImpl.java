@@ -1,9 +1,9 @@
 package com.Barbers.BarbersBackend.V1.service.Impl;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
 import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;

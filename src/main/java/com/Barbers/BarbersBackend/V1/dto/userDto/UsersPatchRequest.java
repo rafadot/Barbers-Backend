@@ -1,29 +1,27 @@
-package com.Barbers.BarbersBackend.V1.dto;
+package com.Barbers.BarbersBackend.V1.dto.userDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersRequest {
+public class UsersPatchRequest {
 
-    @NotBlank
+    @NotNull
+    private UUID id;
+
     private String userName;
 
-    @NotBlank
     private String fullName;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 }

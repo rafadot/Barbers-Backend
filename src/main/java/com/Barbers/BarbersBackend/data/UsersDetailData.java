@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class UsersDetailData implements UserDetails {
@@ -22,6 +23,10 @@ public class UsersDetailData implements UserDetails {
     @Override
     public String getPassword() {
         return users.orElse(new Users()).getPassword();
+    }
+
+    public UUID getId(){
+        return users.get().getId();
     }
 
     @Override

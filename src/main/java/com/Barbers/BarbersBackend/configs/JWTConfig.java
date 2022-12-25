@@ -41,6 +41,7 @@ public class JWTConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.POST , "/login").permitAll()
+                .antMatchers(HttpMethod.POST , "/users/login").permitAll()
                 .antMatchers("/swagger-ui/index.html/**").permitAll()
                 .antMatchers("/webjars/springfox-swagger-ui/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
