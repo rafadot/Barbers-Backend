@@ -2,10 +2,13 @@ package com.Barbers.BarbersBackend.V1.controller;
 
 import com.Barbers.BarbersBackend.V1.dto.*;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 

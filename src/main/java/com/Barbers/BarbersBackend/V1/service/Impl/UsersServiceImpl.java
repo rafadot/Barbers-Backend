@@ -9,6 +9,7 @@ import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.exceptions.BadRequestException;
+import com.Barbers.BarbersBackend.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
@@ -121,6 +122,9 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersResponse getUserEmail(String email) {
         Optional<Users> users = usersRepository.findByEmail(email);
+            if(!users.isPresent()){
+                throw new NotFoundException("Email " + email + " não encontrado");
+            }
 
         return UsersResponse.builder()
                 .id(users.get().getId())
