@@ -129,4 +129,18 @@ public class UsersServiceImpl implements UsersService {
                 .email(users.get().getEmail())
                 .build();
     }
+
+    @Override
+    public UsersResponse getUserId(UUID uuid) {
+        Optional<Users> users = usersRepository.findById(uuid);
+
+        return UsersResponse.builder()
+                .id(users.get().getId())
+                .fullName(users.get().getFullName())
+                .userName(users.get().getUserName())
+                .email(users.get().getEmail())
+                .build();
+    }
+
+
 }

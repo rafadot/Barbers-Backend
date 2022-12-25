@@ -29,8 +29,13 @@ public class UsersController {
         return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
     }
 
-    @GetMapping("/{email}")
-    public ResponseEntity<UsersResponse> findEmail(@PathVariable String email){
+    @GetMapping("/getId")
+    public ResponseEntity<UsersResponse> getUserId(@RequestParam UUID uuid){
+        return new ResponseEntity<>(usersService.getUserId(uuid) , HttpStatus.OK);
+    }
+
+    @GetMapping("/getEmail")
+    public ResponseEntity<UsersResponse> findEmail(@RequestParam String email){
         return new ResponseEntity<>(usersService.getUserEmail(email) , HttpStatus.OK);
     }
 

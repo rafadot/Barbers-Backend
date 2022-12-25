@@ -22,4 +22,6 @@ public interface UsersService {
     UsersResponse patchUsers(UsersPatchRequest usersPatchRequest);
 
     UsersResponse getUserEmail(String email);
+
+    UsersResponse getUserId(UUID uuid);
 }
