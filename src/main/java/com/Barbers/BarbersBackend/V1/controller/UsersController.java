@@ -29,12 +29,12 @@ public class UsersController {
         return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
     }
 
-    @GetMapping("/getId")
+    @GetMapping("/getUsersById")
     public ResponseEntity<UsersResponse> getUserId(@RequestParam UUID uuid){
         return new ResponseEntity<>(usersService.getUserId(uuid) , HttpStatus.OK);
     }
 
-    @GetMapping("/getEmail")
+    @GetMapping("/getUsersByEmail")
     public ResponseEntity<UsersResponse> findEmail(@RequestParam String email){
         return new ResponseEntity<>(usersService.getUserEmail(email) , HttpStatus.OK);
     }
