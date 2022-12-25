@@ -7,6 +7,7 @@ import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UsersService {
@@ -19,4 +20,6 @@ public interface UsersService {
     UsersResponse putUsers(UsersPutRequest usersPutRequest);
 
     UsersResponse patchUsers(UsersPatchRequest usersPatchRequest);
+
+    UsersResponse getUserEmail(String email);
 }

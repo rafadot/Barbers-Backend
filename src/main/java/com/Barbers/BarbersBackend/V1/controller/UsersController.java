@@ -1,9 +1,6 @@
 package com.Barbers.BarbersBackend.V1.controller;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.*;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@EnableWebMvc
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsersController {
@@ -31,6 +27,11 @@ public class UsersController {
     @GetMapping
     public ResponseEntity<List<UsersResponse>> getAllUsers(Pageable pageable){
         return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UsersResponse> findEmail(@PathVariable String email){
+        return new ResponseEntity<>(usersService.getUserEmail(email) , HttpStatus.OK);
     }
 
     @PutMapping
