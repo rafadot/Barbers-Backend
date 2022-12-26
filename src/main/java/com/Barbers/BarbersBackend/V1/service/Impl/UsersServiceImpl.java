@@ -8,8 +8,8 @@ import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
-import com.Barbers.BarbersBackend.exceptions.BadRequestException;
-import com.Barbers.BarbersBackend.exceptions.NotFoundException;
+import com.Barbers.BarbersBackend.exceptions.gerenciament.BadRequestException;
+import com.Barbers.BarbersBackend.exceptions.gerenciament.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Pageable;
@@ -32,12 +32,13 @@ public class UsersServiceImpl implements UsersService {
     private final UsersMapper usersMapper;
 
     @Override
-    public UsersResponse create(UsersRequest usersRequest) {
+    public UsersResponse create(UsersRequest usersRequest){
         Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
 
         if(optUsers.isPresent()) {
-            throw new BadRequestException("Email já existe.");
-        }else{
+            throw new BadRequestException("Email " + usersRequest.getEmail() + " já está cadastrado");
+        }
+
         Users users = new Users();
         BeanUtils.copyProperties(usersRequest,users);
 
@@ -50,7 +51,6 @@ public class UsersServiceImpl implements UsersService {
                 .fullName(users.getFullName())
                 .email(users.getEmail())
                 .build();
-        }
     }
 
     @Override

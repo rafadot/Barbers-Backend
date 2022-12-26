@@ -1,11 +1,9 @@
 package com.Barbers.BarbersBackend.V1.model;
 
+import com.Barbers.BarbersBackend.V1.enunms.Roles;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -30,4 +28,7 @@ public class Users implements Serializable {
 
     private String password;
 
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private Roles type;
 }
