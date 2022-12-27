@@ -4,6 +4,7 @@ import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.security.JWTAuthenticateFilter;
 import lombok.RequiredArgsConstructor;
@@ -41,9 +42,14 @@ public class UsersController {
         return new ResponseEntity<>(usersService.getUserId(uuid) , HttpStatus.OK);
     }
 
-    @GetMapping("/getUsersByEmail")
-    public ResponseEntity<UsersResponse> findEmail(@RequestParam String email){
-        return new ResponseEntity<>(usersService.getUserEmail(email) , HttpStatus.OK);
+    @GetMapping("/emailExists")
+    public ResponseEntity<Boolean> emailExist(@RequestParam String email){
+        return new ResponseEntity<>(usersService.emailExists(email) , HttpStatus.OK);
+    }
+
+    @GetMapping("/userNameExists")
+    public ResponseEntity<Boolean> userNameExists(@RequestParam String userName){
+        return new ResponseEntity<>(usersService.userNameExists(userName) , HttpStatus.OK);
     }
 
     @PutMapping

@@ -20,7 +20,9 @@ public interface UsersService {
 
     UsersResponse patchUsers(UsersPatchRequest usersPatchRequest);
 
-    UsersResponse getUserEmail(String email);
-
     UsersResponse getUserId(UUID uuid);
+
+    Boolean emailExists(String email);
+
+    Boolean userNameExists(String email);
 }

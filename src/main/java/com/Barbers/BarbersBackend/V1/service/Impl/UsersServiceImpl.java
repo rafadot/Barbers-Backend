@@ -34,9 +34,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public UsersResponse create(UsersRequest usersRequest){
         Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
+        Optional<Users> optUsers1 = usersRepository.findByUserName(usersRequest.getUserName());
 
-        if(optUsers.isPresent()) {
-            throw new BadRequestException("Email " + usersRequest.getEmail() + " já está cadastrado");
+        if(optUsers.isPresent() || optUsers1.isPresent()) {
+            throw new BadRequestException("Email ou usuário já cadastrado");
         }
 
         Users users = new Users();
@@ -120,11 +121,8 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UsersResponse getUserEmail(String email) {
-        Optional<Users> users = usersRepository.findByEmail(email);
-            if(!users.isPresent()){
-                throw new NotFoundException("Email " + email + " não encontrado");
-            }
+    public UsersResponse getUserId(UUID uuid) {
+        Optional<Users> users = usersRepository.findById(uuid);
 
         return UsersResponse.builder()
                 .id(users.get().getId())
@@ -135,15 +133,21 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UsersResponse getUserId(UUID uuid) {
-        Optional<Users> users = usersRepository.findById(uuid);
+    public Boolean emailExists(String email) {
+        Optional<Users> users = usersRepository.findByEmail(email);
 
-        return UsersResponse.builder()
-                .id(users.get().getId())
-                .fullName(users.get().getFullName())
-                .userName(users.get().getUserName())
-                .email(users.get().getEmail())
-                .build();
+        boolean exists;
+
+        return exists = users.isPresent();
+    }
+
+    @Override
+    public Boolean userNameExists(String userName) {
+        Optional<Users> users = usersRepository.findByUserName(userName);
+
+        boolean exists;
+
+        return exists = users.isPresent();
     }
 
 
