@@ -2,6 +2,8 @@ package com.Barbers.BarbersBackend.V1.model;
 
 import com.Barbers.BarbersBackend.V1.enunms.Roles;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;

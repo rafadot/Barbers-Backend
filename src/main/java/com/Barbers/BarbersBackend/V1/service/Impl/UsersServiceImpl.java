@@ -4,6 +4,7 @@ import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
 import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.enunms.Roles;
 import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
@@ -33,11 +34,19 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UsersResponse create(UsersRequest usersRequest){
-        Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
-        Optional<Users> optUsers1 = usersRepository.findByUserName(usersRequest.getUserName());
+        Optional<Users> optEmail = usersRepository.findByEmail(usersRequest.getEmail());
+        Optional<Users> optUserNAme = usersRepository.findByUserName(usersRequest.getUserName());
 
-        if(optUsers.isPresent() || optUsers1.isPresent()) {
-            throw new BadRequestException("Email ou usuário já cadastrado");
+        if(optEmail.isPresent() && optUserNAme.isPresent()) {
+            throw new BadRequestException("Email e nome de usuário usuário já cadastrados");
+        }
+
+        if(optEmail.isPresent()) {
+            throw new BadRequestException("Email já cadastrado");
+        }
+
+        if(optUserNAme.isPresent()) {
+            throw new BadRequestException("Nome de usuário já cadastrado");
         }
 
         Users users = new Users();
