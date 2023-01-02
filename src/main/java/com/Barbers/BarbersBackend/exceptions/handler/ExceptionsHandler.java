@@ -15,7 +15,7 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<BodyError> badRequest(BadRequestException e, HttpServletRequest request) {
-        String error = "requisição mal feita";
+        String error = "Requisição mal feita";
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
         BodyError err = BodyError.builder()

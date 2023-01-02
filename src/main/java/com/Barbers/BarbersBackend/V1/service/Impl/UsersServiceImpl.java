@@ -1,18 +1,14 @@
 package com.Barbers.BarbersBackend.V1.service.Impl;
 
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
-import com.Barbers.BarbersBackend.V1.enunms.Roles;
+import com.Barbers.BarbersBackend.V1.dto.userDto.*;
 import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.exceptions.gerenciament.BadRequestException;
-import com.Barbers.BarbersBackend.exceptions.gerenciament.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -64,14 +60,19 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public List<UsersResponse> getAllUsers(Pageable pageable) {
-        return usersRepository.findAll(pageable)
-                .stream()
+    public UsersPaginationResponse getAllUsers(Pageable pageable) {
+        Page<Users> users = usersRepository.findAll(pageable);
+        UsersPaginationResponse response = new UsersPaginationResponse();
+        response.setPage(pageable.getPageNumber());
+        response.setSize(pageable.getPageSize());
+        response.setTotalPages(users.getTotalPages());
+        response.setUsers(users.stream()
                 .map(m -> {
                     UsersResponse usersResponse = new UsersResponse();
                     usersMapper.usersResponseMapper(m, usersResponse);
                     return usersResponse;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toList()));
+        return response;
     }
 
     @Override

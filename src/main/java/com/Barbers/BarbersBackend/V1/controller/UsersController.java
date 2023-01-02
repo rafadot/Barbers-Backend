@@ -1,9 +1,6 @@
 package com.Barbers.BarbersBackend.V1.controller;
 
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.*;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.security.JWTAuthenticateFilter;
@@ -34,7 +31,7 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsersResponse>> getAllUsers(Pageable pageable){
+    public ResponseEntity<UsersPaginationResponse> getAllUsers(Pageable pageable){
         return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
     }
 
