@@ -40,16 +40,6 @@ public class UsersController {
         return new ResponseEntity<>(usersService.getUserId(uuid) , HttpStatus.OK);
     }
 
-    @GetMapping("/emailExists")
-    public ResponseEntity<Boolean> emailExist(@RequestParam String email){
-        return new ResponseEntity<>(usersService.emailExists(email) , HttpStatus.OK);
-    }
-
-    @GetMapping("/userNameExists")
-    public ResponseEntity<Boolean> userNameExists(@RequestParam String userName){
-        return new ResponseEntity<>(usersService.userNameExists(userName) , HttpStatus.OK);
-    }
-
     @PutMapping
     public ResponseEntity<UsersResponse> putUser(@RequestBody UsersPutRequest usersPutRequest){
         return new ResponseEntity<>(usersService.putUsers(usersPutRequest) , HttpStatus.CREATED);
