@@ -1,22 +1,24 @@
 package com.Barbers.BarbersBackend.V1.controller;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.*;
+import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
+import com.Barbers.BarbersBackend.security.JWTAuthenticateFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@EnableWebMvc
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UsersController {
@@ -29,8 +31,13 @@ public class UsersController {
     }
 
     @GetMapping
-    public ResponseEntity<List<UsersResponse>> getAllUsers(Pageable pageable){
+    public ResponseEntity<UsersPaginationResponse> getAllUsers(Pageable pageable){
         return new ResponseEntity<>(usersService.getAllUsers(pageable) , HttpStatus.OK);
+    }
+
+    @GetMapping("/getUsersById")
+    public ResponseEntity<UsersResponse> getUserId(@RequestParam UUID uuid){
+        return new ResponseEntity<>(usersService.getUserId(uuid) , HttpStatus.OK);
     }
 
     @PutMapping
@@ -43,6 +50,7 @@ public class UsersController {
         return new ResponseEntity<>(usersService.patchUsers(usersPatchRequest) , HttpStatus.CREATED);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping
     public void deleteUser(@RequestParam UUID uuid){
         usersService.deleteUsers(uuid);

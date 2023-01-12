@@ -1,10 +1,11 @@
-package com.Barbers.BarbersBackend.V1.dto;
+package com.Barbers.BarbersBackend.V1.dto.userDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -12,16 +13,20 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersPatchRequest {
+public class UsersPutRequest {
 
     @NotNull
     private UUID id;
 
+    @NotBlank
     private String userName;
 
+    @NotBlank
     private String fullName;
 
+    @NotBlank
     private String email;
 
+    @NotBlank
     private String password;
 }

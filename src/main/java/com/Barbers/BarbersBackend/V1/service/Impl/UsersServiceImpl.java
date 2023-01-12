@@ -1,16 +1,14 @@
 package com.Barbers.BarbersBackend.V1.service.Impl;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersPatchRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersPutRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersRequest;
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.*;
 import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
-import com.Barbers.BarbersBackend.exceptions.BadRequestException;
+import com.Barbers.BarbersBackend.exceptions.gerenciament.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -31,12 +29,22 @@ public class UsersServiceImpl implements UsersService {
     private final UsersMapper usersMapper;
 
     @Override
-    public UsersResponse create(UsersRequest usersRequest) {
-        Optional<Users> optUsers = usersRepository.findByEmail(usersRequest.getEmail());
+    public UsersResponse create(UsersRequest usersRequest){
+        Optional<Users> optEmail = usersRepository.findByEmail(usersRequest.getEmail());
+        Optional<Users> optUserNAme = usersRepository.findByUserName(usersRequest.getUserName());
 
-        if(optUsers.isPresent()) {
-            throw new BadRequestException("Email já existe.");
-        }else{
+        if(optEmail.isPresent() && optUserNAme.isPresent()) {
+            throw new BadRequestException("Email e nome de usuário usuário já cadastrados");
+        }
+
+        if(optEmail.isPresent()) {
+            throw new BadRequestException("Email já cadastrado");
+        }
+
+        if(optUserNAme.isPresent()) {
+            throw new BadRequestException("Nome de usuário já cadastrado");
+        }
+
         Users users = new Users();
         BeanUtils.copyProperties(usersRequest,users);
 
@@ -49,18 +57,22 @@ public class UsersServiceImpl implements UsersService {
                 .fullName(users.getFullName())
                 .email(users.getEmail())
                 .build();
-        }
     }
 
     @Override
-    public List<UsersResponse> getAllUsers(Pageable pageable) {
-        return usersRepository.findAll(pageable)
-                .stream()
+    public UsersPaginationResponse getAllUsers(Pageable pageable) {
+        Page<Users> users = usersRepository.findAll(pageable);
+        UsersPaginationResponse response = new UsersPaginationResponse();
+        response.setPage(pageable.getPageNumber());
+        response.setSize(pageable.getPageSize());
+        response.setTotalPages(users.getTotalPages());
+        response.setUsers(users.stream()
                 .map(m -> {
                     UsersResponse usersResponse = new UsersResponse();
                     usersMapper.usersResponseMapper(m, usersResponse);
                     return usersResponse;
-                }).collect(Collectors.toList());
+                }).collect(Collectors.toList()));
+        return response;
     }
 
     @Override
@@ -117,4 +129,36 @@ public class UsersServiceImpl implements UsersService {
             return usersResponse;
         }
     }
+
+    @Override
+    public UsersResponse getUserId(UUID uuid) {
+        Optional<Users> users = usersRepository.findById(uuid);
+
+        return UsersResponse.builder()
+                .id(users.get().getId())
+                .fullName(users.get().getFullName())
+                .userName(users.get().getUserName())
+                .email(users.get().getEmail())
+                .build();
+    }
+
+    @Override
+    public Boolean emailExists(String email) {
+        Optional<Users> users = usersRepository.findByEmail(email);
+
+        boolean exists;
+
+        return exists = users.isPresent();
+    }
+
+    @Override
+    public Boolean userNameExists(String userName) {
+        Optional<Users> users = usersRepository.findByUserName(userName);
+
+        boolean exists;
+
+        return exists = users.isPresent();
+    }
+
+
 }

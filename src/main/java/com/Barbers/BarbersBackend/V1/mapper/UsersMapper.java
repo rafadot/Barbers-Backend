@@ -1,6 +1,6 @@
 package com.Barbers.BarbersBackend.V1.mapper;
 
-import com.Barbers.BarbersBackend.V1.dto.UsersResponse;
+import com.Barbers.BarbersBackend.V1.dto.userDto.UsersResponse;
 import com.Barbers.BarbersBackend.V1.model.Users;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

@@ -1,4 +1,4 @@
-package com.Barbers.BarbersBackend.V1.dto;
+package com.Barbers.BarbersBackend.V1.dto.userDto;
 
 import lombok.*;
 
@@ -18,4 +18,5 @@ public class UsersResponse {
     private String fullName;
 
     private String email;
+
 }
