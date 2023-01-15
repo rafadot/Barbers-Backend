@@ -1,4 +1,4 @@
-package com.Barbers.BarbersBackend.V1.repositorie;
+package com.Barbers.BarbersBackend.V1.repositories;
 
 import com.Barbers.BarbersBackend.V1.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;

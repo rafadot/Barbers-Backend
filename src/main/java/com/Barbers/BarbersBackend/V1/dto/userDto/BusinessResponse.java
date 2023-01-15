@@ -10,11 +10,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UsersResponse {
+public class BusinessResponse {
 
     private UUID id;
-
-    private String userName;
 
     private String cnpj;
 
@@ -23,5 +21,4 @@ public class UsersResponse {
     private String email;
 
     private Roles type;
-
 }

@@ -1,7 +1,7 @@
 package com.Barbers.BarbersBackend.V1.service.Impl;
 
 import com.Barbers.BarbersBackend.V1.model.Users;
-import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
+import com.Barbers.BarbersBackend.V1.repositories.UsersRepository;
 import com.Barbers.BarbersBackend.data.UsersDetailData;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

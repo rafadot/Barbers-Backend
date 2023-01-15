@@ -3,7 +3,7 @@ package com.Barbers.BarbersBackend.V1.service.Impl;
 import com.Barbers.BarbersBackend.V1.dto.userDto.*;
 import com.Barbers.BarbersBackend.V1.mapper.UsersMapper;
 import com.Barbers.BarbersBackend.V1.model.Users;
-import com.Barbers.BarbersBackend.V1.repositorie.UsersRepository;
+import com.Barbers.BarbersBackend.V1.repositories.UsersRepository;
 import com.Barbers.BarbersBackend.V1.service.interfaces.UsersService;
 import com.Barbers.BarbersBackend.exceptions.gerenciament.BadRequestException;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -29,34 +28,48 @@ public class UsersServiceImpl implements UsersService {
     private final UsersMapper usersMapper;
 
     @Override
-    public UsersResponse create(UsersRequest usersRequest){
+    public UsersResponse create(UsersRequest usersRequest) {
         Optional<Users> optEmail = usersRepository.findByEmail(usersRequest.getEmail());
         Optional<Users> optUserNAme = usersRepository.findByUserName(usersRequest.getUserName());
 
-        if(optEmail.isPresent() && optUserNAme.isPresent()) {
+        if (optEmail.isPresent() && optUserNAme.isPresent() && usersRequest.getUserName() != null) {
             throw new BadRequestException("Email e nome de usuário usuário já cadastrados");
         }
 
-        if(optEmail.isPresent()) {
+        if (optEmail.isPresent()) {
             throw new BadRequestException("Email já cadastrado");
         }
 
-        if(optUserNAme.isPresent()) {
+        if (optUserNAme.isPresent()) {
             throw new BadRequestException("Nome de usuário já cadastrado");
         }
 
         Users users = new Users();
-        BeanUtils.copyProperties(usersRequest,users);
+        BeanUtils.copyProperties(usersRequest, users);
 
         users.setPassword(encoder.encode(users.getPassword()));
         usersRepository.save(users);
 
-        return UsersResponse.builder()
-                .id(users.getId())
-                .userName(users.getUserName())
-                .fullName(users.getFullName())
-                .email(users.getEmail())
-                .build();
+        if (users.getType().toString().equals("USER")) {
+            return UsersResponse.builder()
+                    .id(users.getId())
+                    .userName(users.getUserName())
+                    .fullName(users.getFullName())
+                    .email(users.getEmail())
+                    .type(users.getType())
+                    .build();
+        } else if (users.getType().toString().equals("BUSINESS")) {
+            return UsersResponse.builder()
+                    .id(users.getId())
+                    .cnpj(users.getCnpj())
+                    .fullName(users.getFullName())
+                    .email(users.getEmail())
+                    .type(users.getType())
+                    .build();
+        }
+
+        return null;
+
     }
 
     @Override

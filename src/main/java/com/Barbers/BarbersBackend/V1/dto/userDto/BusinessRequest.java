@@ -1,20 +1,16 @@
 package com.Barbers.BarbersBackend.V1.dto.userDto;
 
 import com.Barbers.BarbersBackend.V1.enunms.Roles;
-import lombok.*;
-
-import java.util.UUID;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class UsersResponse {
-
-    private UUID id;
-
-    private String userName;
+public class BusinessRequest {
 
     private String cnpj;
 
@@ -23,5 +19,4 @@ public class UsersResponse {
     private String email;
 
     private Roles type;
-
 }
